@@ -5,6 +5,7 @@ import tensorflow as tf
 import numpy as np
 from PIL import Image
 import gc  # Garbage collection to free memory
+from tensorflow.keras import utils
 
 app = Flask(__name__)
 
@@ -17,8 +18,12 @@ ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
-# Load the model (consider quantization or smaller model if necessary)
-model = tf.keras.models.load_model(MODEL_PATH)
+# Custom layer registration (if needed)
+from custom_layers import KerasLayer  # Make sure to import or define KerasLayer here
+
+# Load the model with the custom layer
+with utils.custom_object_scope({'KerasLayer': KerasLayer}):
+    model = tf.keras.models.load_model(MODEL_PATH)
 
 # Define class labels (updated according to your classes)
 CLASSES = [
