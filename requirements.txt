@@ -1,5 +1,5 @@
 Flask==2.2.2
-tensorflow==2.13.0  # Or whichever compatible version you are using
+tensorflow-cpu==2.13.0
 numpy==1.23.3
 Pillow==9.2.0
 werkzeug==2.2.2
